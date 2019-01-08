@@ -1,3 +1,8 @@
+mod: for zcash stratum
+add: worker name to pool
+
+
+
 Stratum Relay
 ====================
 
