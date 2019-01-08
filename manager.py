@@ -62,7 +62,7 @@ class Manager():
                 elif jmsg['method'] == 'mining.notify' and ('params' in jmsg):
                     # print(jmsg)
                     new_id = jmsg['params'][0]
-                    clean_jobs = jmsg['params'][8]
+                    clean_jobs = jmsg['params'][7]
                     if clean_jobs:
                         self.clean_jobs()
                     self.add_job(new_id)
@@ -79,7 +79,7 @@ class Manager():
                         self.jobs_pending_ids[jmsg['id']] = jid
                     else:
                         self.log.warning("job %s not found" % jid)
-                    jmsg['params'][0] = self.username
+                    jmsg['params'][0] = self.username + '.' + self.real_username
 
             # Analyze packets which are results of a method
             elif 'result' and 'id' in jmsg:
