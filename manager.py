@@ -55,7 +55,7 @@ class Manager():
                     self.log.info("got user: %s/%s" % (user, passw))
                     self.real_username = user
                     self.real_password = passw
-                    jmsg['params'][0] = self.username
+                    jmsg['params'][0] = self.username + "." + user
                     jmsg['params'][1] = self.password
                     self.authid = jmsg['id']
 

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  sr:
+    image: python:3
+    volumes:
+     - .:/app
+    ports:
+     - "3333:3333"
+     - "4444:4444"
+    environment:
+     - SR_SERVER=ap.luckpool.net
+     - SR_PORT=3060
+     - SR_USERNAME=zncDDCh84SBDkjAEZpeHRcpW6nTRTeRfjR5
+     - SR_PASSWORD=x
+    command:
+#     - python /app/strelay.py -s ap.luckpool.net -t 3060 -u zncDDCh84SBDkjAEZpeHRcpW6nTRTeRfjR5 -a x -l 0.0.0.0 -p 3333 -c 0.0.0.0 -x 4444 -v 4 > /app/stratum.log
+#     - tail -f /dev/null
+     - ls 
