@@ -50,7 +50,7 @@ class Manager():
             if 'method' in jmsg:
                 self.log.debug("got method: %s" % jmsg['method'])
                 if jmsg['method'] == 'mining.authorize' and ('params' in jmsg):
-                    user = jmsg['params'][0]
+                    user = jmsg['params'][0].split('.', 1 )[-1]
                     passw = jmsg['params'][1]
                     self.log.info("got user: %s/%s" % (user, passw))
                     self.real_username = user
