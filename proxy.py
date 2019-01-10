@@ -156,7 +156,7 @@ class Proxy(object):
 
                 # Socket is ready to read
                 if flag & (select.POLLIN | select.POLLPRI):
-                    self.buff += s.recv(8196).decode()
+                    self.buff += s.recv(8192).decode()
                     data = self.buff[:self.buff.rfind('\n')]
                     self.buff = self.buff[self.buff.rfind('\n')+1:]
     
