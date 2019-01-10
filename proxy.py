@@ -75,6 +75,7 @@ class Proxy(object):
         self.shares = sharestats
         self.manager = manager.Manager(sharestats=self.shares, identifier="mng"+self.id)
         self.shutdown = False
+        self.buff = ""
 
     def set_auth(self, user, passw):
         if self.manager.authorized:
@@ -155,7 +156,10 @@ class Proxy(object):
 
                 # Socket is ready to read
                 if flag & (select.POLLIN | select.POLLPRI):
-                    data = s.recv(32768).decode()
+                    self.buff += s.recv(8196).decode()
+                    data = self.buff[:self.buff.rfind('\n')]
+                    self.buff = self.buff[self.buff.rfind('\n')+1:]
+    
                     if data:
                         if self.pool is s:
                             self.log.debug("got msg from pool: %s" % data)
