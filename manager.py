@@ -62,7 +62,7 @@ class Manager():
                 elif jmsg['method'] == 'mining.notify' and ('params' in jmsg):
                     # print(jmsg)
                     new_id = jmsg['params'][0]
-                    clean_jobs = jmsg['params'][7]
+                    clean_jobs = jmsg['params'][-1]
                     if clean_jobs:
                         self.clean_jobs()
                     self.add_job(new_id)

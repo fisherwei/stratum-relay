@@ -155,7 +155,7 @@ class Proxy(object):
 
                 # Socket is ready to read
                 if flag & (select.POLLIN | select.POLLPRI):
-                    data = s.recv(8196).decode()
+                    data = s.recv(32768).decode()
                     if data:
                         if self.pool is s:
                             self.log.debug("got msg from pool: %s" % data)
