@@ -75,7 +75,6 @@ class Proxy(object):
         self.shares = sharestats
         self.manager = manager.Manager(sharestats=self.shares, identifier="mng"+self.id)
         self.shutdown = False
-        self.buff = ""
 
     def set_auth(self, user, passw):
         if self.manager.authorized:
@@ -132,6 +131,7 @@ class Proxy(object):
         self.fd_to_socket = {self.pool.fileno(): self.pool}
         iterations_to_die = -1
         pool_ack_counter = POOL_ITERATIONS_TIMEOUT
+        buff = ""
         while not self.shutdown:
 
             if iterations_to_die > 0:
@@ -156,9 +156,7 @@ class Proxy(object):
 
                 # Socket is ready to read
                 if flag & (select.POLLIN | select.POLLPRI):
-                    self.buff += s.recv(8192).decode()
-                    data = self.buff[:self.buff.rfind('\n')]
-                    self.buff = self.buff[self.buff.rfind('\n')+1:]
+                    data = s.recv(8192).decode()
     
                     if data:
                         if self.pool is s:
@@ -167,6 +165,9 @@ class Proxy(object):
                                 self.manager.process(data, is_pool=True))
                             pool_ack = True
                         else:
+                            buff += data
+                            data = buff[:buff.rfind("\n")] + "\n"
+                            buff = buff[buff.rfind("\n") + 1:]
                             self.log.debug("got msg from miner: %s" % data)
                             self.pool_queue.put(self.manager.process(data))
                     else:
