@@ -165,10 +165,15 @@ class Proxy(object):
                                 self.manager.process(data, is_pool=True))
                             pool_ack = True
                         else:
+                            self.log.debug("got msg from miner: %s" % data)
                             buff += data
                             data = buff[:buff.rfind("\n")] + "\n"
                             buff = buff[buff.rfind("\n") + 1:]
-                            self.log.debug("got msg from miner: %s" % data)
+                            self.log.debug("data is: %s" % data)
+                            self.log.debug("buff is: %s" % buff)
+                            if data[-2] != "}" :
+                                self.log.debug("last char is not '}', skip.")
+                                continue
                             self.pool_queue.put(self.manager.process(data))
                     else:
                         if self.pool is s and iterations_to_die < 0:
